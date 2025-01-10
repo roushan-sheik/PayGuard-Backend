@@ -1,7 +1,7 @@
-import express, { Request, Response } from "express";
+import express, { Application, Request, Response } from "express";
 import cors from "cors";
 
-const app = express();
+const app: Application = express();
 
 // middlewares for parsing incoming requests
 const corseOptions = {
@@ -16,5 +16,8 @@ app.use(express.static("public"));
 app.get("/", (req: Request, res: Response) => {
   res.send("PayGuard Home");
 });
+// App Routes =======================>
+import appRoute from "./app/routes";
+app.use("/api/v1", appRoute);
 
 export { app };
