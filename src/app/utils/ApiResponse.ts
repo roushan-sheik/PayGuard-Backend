@@ -1,14 +1,30 @@
-class ApiResponse<T> {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+class ApiResponse<T, K = undefined> {
   private success: boolean;
+
   constructor(
     public statusCode: number,
     public data: T,
-    public message: string = "Success"
+    public message: string = "Successful",
+    public meta?: K
   ) {
-    this.statusCode = statusCode;
     this.data = data;
-    this.message = statusCode >= 400 ? "Failed" : message;
     this.success = statusCode < 400;
+    this.meta = meta;
+    this.message = statusCode >= 400 ? "Failed" : message || "Successful";
+  }
+  // format the response method
+  public format(): Record<string, any> {
+    return {
+      success: this.success,
+      message: this.message,
+      meta: this.meta || {},
+      data: this.data,
+    };
   }
 }
 export default ApiResponse;
+
+// Optional if meta might not be passed
+// Determines if the request was successful
+// Adjusts the message based on status code
