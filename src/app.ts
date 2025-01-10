@@ -20,4 +20,9 @@ app.get("/", (req: Request, res: Response) => {
 import appRoute from "./app/routes";
 app.use("/api/v1", appRoute);
 
+// not found middleware and globalErrorHandler
+import { globalErrorHandler, notFound } from "./app/middlewares";
+app.use(notFound);
+app.use(globalErrorHandler);
+
 export { app };
