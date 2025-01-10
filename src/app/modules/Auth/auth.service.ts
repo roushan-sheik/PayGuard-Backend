@@ -47,6 +47,19 @@ const loginUser = async (payload: any) => {
   };
 };
 
+// Logout user
+const logOutUser = async (refreshToken: string) => {
+  // decode token
+  const decodedData: JwtPayload | null = jwtHelpers.verifyToken(
+    refreshToken,
+    config.jwt.refresh_token_secret as string
+  );
+  return {
+    message: "Log out Successfully",
+  };
+};
+
 export const authService = {
   loginUser,
+  logOutUser,
 };
