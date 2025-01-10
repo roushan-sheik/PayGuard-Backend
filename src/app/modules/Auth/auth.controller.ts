@@ -3,18 +3,24 @@ import AsyncHandler from "../../utils/AsyncHandler";
 import { authService } from "./auth.service";
 import status from "http-status";
 import ApiResponse from "../../utils/ApiResponse";
+import config from "../../../config";
 
 // Auth Controller
-const registerUser = AsyncHandler(async (req: Request, res: Response) => {
+const loginUser = AsyncHandler(async (req: Request, res: Response) => {
   // check user credentials
-  const result = await authService.registerUser(req.body);
+  const { accessToken, refreshToken } = await authService.loginUser(req.body);
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: config.node_env === "production",
+  });
+
   res
-    .status(status.CREATED)
+    .status(status.OK)
     .json(
-      new ApiResponse(status.CREATED, result, "User registered successfully")
+      new ApiResponse(status.OK, { accessToken }, "User LoggedIn Successfully.")
     );
 });
 
 export const authController = {
-  registerUser,
+  loginUser,
 };
