@@ -4,4 +4,5 @@ export type TUser = {
   email: string;
   password: string;
   role?: keyof typeof USER_ROLE;
+  refreshToken?: string;
 };

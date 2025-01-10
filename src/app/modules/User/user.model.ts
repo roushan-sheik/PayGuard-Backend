@@ -19,9 +19,12 @@ const userSchema = new Schema<TUser>(
     },
     role: {
       type: String,
-      required: [true, "Role is required"],
       enum: Object.keys(USER_ROLE),
       default: USER_ROLE.USER,
+    },
+    refreshToken: {
+      type: String,
+      default: null,
     },
   },
   { timestamps: true }
