@@ -11,6 +11,6 @@ router
     zodValidateRequest(UserValidation.createUserValidationSchema),
     authController.loginUser
   );
-router.route("/logout").post(authController.loginUser);
+router.route("/logout").post(authController.logOutUser);
 
 export default router;

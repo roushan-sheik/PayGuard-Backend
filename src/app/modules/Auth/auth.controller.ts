@@ -22,7 +22,8 @@ const loginUser = AsyncHandler(async (req: Request, res: Response) => {
     );
 });
 const logOutUser = AsyncHandler(async (req: Request, res: Response) => {
-  const refreshToken = req.cookies.refreshToken || req.body.refreshToken;
+  const refreshToken = req?.cookies?.refreshToken || req.body.refreshToken;
+
   if (!refreshToken) {
     // status 401
     throw new ApiError(401, "You are not authorized");

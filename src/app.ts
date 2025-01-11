@@ -1,5 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+import { globalErrorHandler, notFound } from "./app/middlewares";
 
 const app: Application = express();
 
@@ -12,6 +14,7 @@ app.use(cors(corseOptions));
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
+app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("PayGuard Home");
@@ -21,7 +24,6 @@ import appRoute from "./app/routes";
 app.use("/api/v1", appRoute);
 
 // not found middleware and globalErrorHandler
-import { globalErrorHandler, notFound } from "./app/middlewares";
 app.use(notFound);
 app.use(globalErrorHandler);
 

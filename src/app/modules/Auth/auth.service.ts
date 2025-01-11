@@ -1,15 +1,16 @@
 //* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+//* eslint-disable @typescript-eslint/no-explicit-any */
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 import status from "http-status";
 import ApiError from "../../utils/ApiError";
 import User from "../User/user.model";
 import { isPasswordMatched } from "./auth.utils";
+
 import config from "../../../config";
 import { jwtHelpers } from "../../../helper/jwtHelper";
 
 // Login user
-const loginUser = async (payload: any) => {
+const loginUser = async (payload: { email: string; password: string }) => {
   // Check if the user exists
   const user = await User.findOne({ email: payload.email }).select("+password");
   if (!user) {
@@ -21,6 +22,7 @@ const loginUser = async (payload: any) => {
     payload.password,
     user.password
   );
+
   if (!passwordMatch) {
     throw new ApiError(status.UNAUTHORIZED, "Invalid email or password");
   }
