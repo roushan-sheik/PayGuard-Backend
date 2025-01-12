@@ -15,6 +15,14 @@ const main = () => {
     .catch((error) => {
       console.log("MongoDB Connection FAILED!", error.message);
     });
+
+  process.on("uncaughtException", (err) => {
+    console.error("Uncaught Exception:", err);
+  });
+
+  process.on("unhandledRejection", (reason, promise) => {
+    console.error("Unhandled Rejection at:", promise, "reason:", reason);
+  });
 };
 main();
 export default main;
